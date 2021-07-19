@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+<!--  CONTENTS
+    1. TAG VERSION1 CREATE
+    2. customer CREATE
+    3. POST CREATE
+    4. customer_POST CREATE
+    5. customer_POST ADD PRIMARY KEY
+    6. TAG VERSION2 CREATE
+    7. customer_POST ADD FOREIGN KEY
+
+
+
+
+-->
+
+
+
+
+
+
+
+<!-- CREATE TAG VERSION 1-->
+    <changeSet id="create-tag-version1" author="mahdi">
+        <tagDatabase  tag="version1"/>
+    </changeSet>
+
+
+<!--  customer CREATE  -->
+<!--CREATE TABLE customer( id SERIAL PRIMARY KEY, name VARCHAR(50) NOT NULL )  -->
+    <changeSet  id="customer-create"  author="mahdi" >
+        <comment>Creating table customer</comment>
+        <createTable  tableName="customer">
+            <column  name="id"  type="int" autoIncrement="true">
+                <constraints  primaryKey="true" nullable="false"/>
+            </column>
+            <column  name="name"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+<!--POST-CREATE-->
+<!--CREATE TABLE post( id SERIAL PRIMARY KEY, title VARCHAR(50) NOT NULL )  -->
+    <changeSet  id="post-create"  author="mahdi" >
+        <comment>Creating post table</comment>
+        <createTable  tableName="post">
+            <column  name="id"  type="int" autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="title"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+<!-- customer_POST CREATE-->
+<!-- CREATE TABLE customer_post( INT customer_id NOT NULL, INT post_id NOT NULL ) -->
+    <changeSet  id="customer_post-create"  author="mahdi" >
+        <comment>Creating customer-post table</comment>
+        <createTable  tableName="customer_post">
+            <column  name="customer_id"  type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="post_id"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+<!-- CUSTOMER_POST ADD PRIMARY KEY-->
+<!-- ALTER TABLE customer_post ADD CONSTRAINT PK_customer_post primary key(customer_id,post_id)-->
+<!--    <changeSet id="customer_post-add-primary-key" author="mahdi">-->
+<!--        <addPrimaryKey tableName="customer_post"-->
+<!--                       columnNames="customer_id,post_id"-->
+<!--                       constraintName="PK_customer_post"-->
+<!--        />-->
+<!--    </changeSet>-->
+
+<!--TAG VERSION2 CREATE-->
+    <changeSet  author="mahdi"  id="make_version2">
+        <tagDatabase  tag="version2"/>
+    </changeSet>
+
+<!--CUSTOMER_POST ADD FOREIGN KEY-->
+<!-- ALTER TABLE customer_post ADD CONSTRAINT FK_customer FOREIGN KEY(customer_id) REFERENCES customer(id) -->
+<!-- ALTER TABLE customer_post ADD CONSTRAINT FK_customer FOREIGN KEY(post_id) REFERENCES post(id)   -->
+    <changeSet id="customer_post-add-foreign-key" author="mahdi">
+        <addForeignKeyConstraint baseTableName="customer_post" baseColumnNames="customer_id" constraintName="FK_customer"
+                                 referencedTableName="customer" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="customer_post" baseColumnNames="post_id" constraintName="FK_post"
+                                 referencedTableName="post" referencedColumnNames="id"/>
+    </changeSet>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+</databaseChangeLog>
+
+
+
