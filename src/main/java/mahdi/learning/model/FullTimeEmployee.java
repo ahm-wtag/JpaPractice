@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-//@Entity
-//@DiscriminatorValue("regular")
+@Entity
+@DiscriminatorValue("regular")
 public class FullTimeEmployee extends Employee {
 
 

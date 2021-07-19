@@ -95,7 +95,24 @@
         <addForeignKeyConstraint baseTableName="customer_post" baseColumnNames="post_id" constraintName="FK_post"
                                  referencedTableName="post" referencedColumnNames="id"/>
     </changeSet>
-    
+
+
+<!--    ADD TABLE EMPLOYEEE -->
+    <changeSet id="employee-create" author="mahdi">
+        <createTable tableName="employee">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="int"/>
+            <column name = "pph" type ="int"/>
+        </createTable>
+    </changeSet>
 
 
 
